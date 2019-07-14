@@ -61,7 +61,7 @@ namespace RegressaoComML
                 .Append(mlContext.Transforms.Categorical
                     .OneHotEncoding(outputColumnName: "TipoEncoded", inputColumnName: "Tipo"))
                 .Append(mlContext.Transforms
-                    .Concatenate("Features", "Distancia", "Valor"))
+                    .Concatenate("Features", "TipoEncoded", "Distancia", "Valor"))
                 .Append(mlContext.Regression.Trainers.FastTree());
 
             var model = pipeline.Fit(dataView);
@@ -74,7 +74,7 @@ namespace RegressaoComML
             var taxiTripSample = new Frete()
             {
                 Tipo = "NORMAL",
-                Distancia = 40,
+                Distancia = 10,
                 Valor = 0 // ← valor que será prevido
             };
             var prediction = predictionFunction.Predict(taxiTripSample);
